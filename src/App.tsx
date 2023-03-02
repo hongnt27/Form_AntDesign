@@ -1,6 +1,7 @@
 import "./App.css";
-import Login from "./components/Login";
-
+import { Routes, Route } from "react-router-dom";
+import UseForm from "../src/useFrom/UseForm";
+import Login from "./login/Login";
 
 function App() {
   console.log("ok");
@@ -9,14 +10,21 @@ function App() {
     <div
       className="App"
       style={{
-        margin: "0 auto",
+        margin: "50px auto",
+        padding: "20px",
         display: "flex",
         alignItems: "center",
         flexDirection: "column",
-        width: "50%",
+        width: "30%",
+        height: "500px",
+        border: "1px solid black",
+        borderRadius: "5px",
       }}
     >
-      <Login />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/useform" element={<UseForm />} />
+      </Routes>
     </div>
   );
 }

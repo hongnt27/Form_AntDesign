@@ -1,25 +1,18 @@
 import React, { useState } from "react";
 import { Button, Cascader, Checkbox, Form, Input } from "antd";
 import styled from "styled-components";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  LockOutlined,
+  UserOutlined,
+  RightCircleFilled,
+} from "@ant-design/icons";
 import { options } from "../contants/contants";
-import { inputData } from "../contants/interface";
+import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
-  const [list, setList] = useState<inputData>({
-    username: "",
-    password: "",
-    email: "",
-    remember: false,
-    address: ["hanoi", "hoankiem", "hangma"],
-    confirmpassword: "",
-  });
+  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
   const onFinish = (values: any) => {
-    if (values.remember) {
-      setList(values);
-    } else {
-      alert("Click remember to login");
-    }
+    console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -28,14 +21,21 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <p>Form Login</p>
+      <Checkbox
+        checked={componentDisabled}
+        onChange={(e) => setComponentDisabled(e.target.checked)}
+        style={{ marginBottom: "10px", fontSize: "large" }}
+      >
+        Form disabled
+      </Checkbox>
       <Form
         name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
+        labelCol={{ span: 10 }}
+        wrapperCol={{ span: 30 }}
         style={{ width: "100%" }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
+        disabled={componentDisabled}
         labelAlign="left"
       >
         <FormItemStyled
@@ -121,9 +121,7 @@ const Login: React.FC = () => {
               validator(_, value) {
                 return value
                   ? Promise.resolve()
-                  : Promise.reject(
-                      "You need to agree to our terms to sign up."
-                    );
+                  : Promise.reject("You need to agree to our terms to login.");
               },
             },
           ]}
@@ -137,6 +135,12 @@ const Login: React.FC = () => {
           </Button>
         </Form.Item>
       </Form>
+      <Link to={"/useform"} style={{ textDecoration: "none" }}>
+        Next to useForm
+        <RightCircleFilled
+          style={{ fontSize: "large", color: "green", padding: "5px 0 0 5px" }}
+        />
+      </Link>
     </>
   );
 };
