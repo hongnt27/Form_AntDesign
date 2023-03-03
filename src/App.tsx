@@ -4,8 +4,6 @@ import UseForm from "../src/useFrom/UseForm";
 import Login from "./login/Login";
 
 function App() {
-  console.log("ok");
-
   return (
     <div
       className="App"
@@ -16,7 +14,7 @@ function App() {
         alignItems: "center",
         flexDirection: "column",
         width: "30%",
-        height: "500px",
+        height: "600px",
         border: "1px solid black",
         borderRadius: "5px",
       }}

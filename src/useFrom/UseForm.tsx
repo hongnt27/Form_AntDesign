@@ -1,6 +1,6 @@
-import { Button, Form, Input, Select } from "antd";
+import { Button, Checkbox, Form, Input, Select } from "antd";
 import { LeftCircleFilled } from "@ant-design/icons";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const { Option } = Select;
@@ -16,6 +16,7 @@ const tailLayout = {
 
 const UseForm: React.FC = () => {
   const [form] = Form.useForm();
+  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
 
   const onGenderChange = (value: string) => {
     switch (value) {
@@ -46,7 +47,14 @@ const UseForm: React.FC = () => {
 
   return (
     <>
-      <p>Use Form</p>
+      {/* <p>Use Form</p> */}
+      <Checkbox
+        checked={componentDisabled}
+        onChange={(e) => setComponentDisabled(e.target.checked)}
+        style={{ marginBottom: "10px", fontSize: "large", marginLeft: "0" }}
+      >
+        Form disabled
+      </Checkbox>
       <Form
         {...layout}
         form={form}
@@ -54,6 +62,7 @@ const UseForm: React.FC = () => {
         onFinish={onFinish}
         style={{ width: "100%" }}
         labelAlign="left"
+        disabled={componentDisabled}
       >
         <Form.Item name="note" label="Note" rules={[{ required: true }]}>
           <Input />
@@ -87,8 +96,12 @@ const UseForm: React.FC = () => {
             ) : null
           }
         </Form.Item>
-        <Form.Item {...tailLayout} labelAlign="left">
-          <Button type="primary" htmlType="submit">
+        <Form.Item {...tailLayout}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ marginRight: "5px" }}
+          >
             Submit
           </Button>
           <Button htmlType="button" onClick={onReset}>

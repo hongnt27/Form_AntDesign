@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Cascader, Checkbox, Form, Input } from "antd";
+import { Button, Cascader, Checkbox, Form, Input, Select } from "antd";
 import styled from "styled-components";
 import {
   LockOutlined,
@@ -8,9 +8,16 @@ import {
 } from "@ant-design/icons";
 import { options } from "../contants/contants";
 import { Link } from "react-router-dom";
-
+import { useTranslation } from "react-i18next";
 const Login: React.FC = () => {
-  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
+  const { t } = useTranslation();
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (lng: "en" | "vi") => {
+    i18n.changeLanguage(lng);
+    console.log(lng);
+  };
+
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
@@ -21,13 +28,16 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Checkbox
-        checked={componentDisabled}
-        onChange={(e) => setComponentDisabled(e.target.checked)}
-        style={{ marginBottom: "10px", fontSize: "large" }}
+      <Select
+        placeholder="Select language"
+        style={{ marginBottom: "15px" }}
+        // defaultValue={"en"}
+        onChange={changeLanguage}
       >
-        Form disabled
-      </Checkbox>
+        <Select.Option value="en">Tiếng Anh</Select.Option>
+        <Select.Option value="vi">Tiếng Việt</Select.Option>
+      </Select>
+
       <Form
         name="basic"
         labelCol={{ span: 10 }}
@@ -35,11 +45,10 @@ const Login: React.FC = () => {
         style={{ width: "100%" }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        disabled={componentDisabled}
         labelAlign="left"
       >
         <FormItemStyled
-          label="Username"
+          label={t("username")}
           name="username"
           rules={[
             { required: true, message: "Please input your username!" },
@@ -50,10 +59,10 @@ const Login: React.FC = () => {
         </FormItemStyled>
 
         <Form.Item
-          label="Password"
+          label={t("password")}
           name="password"
           rules={[
-            { required: true },
+            { required: true, message: "Please input your password!" },
             { min: 6 },
             { max: 16 },
             {
@@ -75,7 +84,7 @@ const Login: React.FC = () => {
           />
         </Form.Item>
         <Form.Item
-          label="Confirm password"
+          label={t("confirmpassword")}
           name="confirmpassword"
           rules={[
             { required: true },
@@ -106,7 +115,11 @@ const Login: React.FC = () => {
         >
           <Input />
         </Form.Item>
-        <Form.Item label="Address" name="address" rules={[{ required: true }]}>
+        <Form.Item
+          label={t("address")}
+          name="address"
+          rules={[{ required: true }]}
+        >
           <Cascader options={options} />
         </Form.Item>
         <Form.Item
@@ -126,17 +139,18 @@ const Login: React.FC = () => {
             },
           ]}
         >
-          <Checkbox>Remember me</Checkbox>
+          <Checkbox>{t("remember")}</Checkbox>
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            {t("submit")}
           </Button>
         </Form.Item>
       </Form>
       <Link to={"/useform"} style={{ textDecoration: "none" }}>
-        Next to useForm
+        {t("nextUseForm")}
+
         <RightCircleFilled
           style={{ fontSize: "large", color: "green", padding: "5px 0 0 5px" }}
         />
